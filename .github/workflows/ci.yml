@@ -46,4 +46,4 @@ jobs:
           python-version: "3.14"
           allow-prereleases: true
       - run: pip install -e ".[dev]"
-      - run: mutmut run --no-progress
+      - run: mutmut run
