@@ -7,12 +7,40 @@ name = "pytest-describe-beautifully"
 version = "0.1.0"
 description = "Beautiful terminal and HTML output for pytest-describe."
 license = "MIT"
+readme = "README.md"
 requires-python = ">=3.11"
+authors = [
+    { name = "Mark Ng" }
+]
+keywords = [
+    "pytest",
+    "pytest-describe",
+    "testing",
+    "bdd",
+    "reporting",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = [
     "pytest>=7.0",
     "pytest-describe>=2.0",
     "rich>=13.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/markng/pytest-describe-beautifully"
+Repository = "https://github.com/markng/pytest-describe-beautifully"
+Issues = "https://github.com/markng/pytest-describe-beautifully/issues"
 
 [project.optional-dependencies]
 dev = [
