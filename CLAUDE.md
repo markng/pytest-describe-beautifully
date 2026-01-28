@@ -54,7 +54,14 @@ The plugin activates only when `--describe-beautifully` (or `--db`) is passed. T
 
 ## Code Style
 
-- Python 3.12+, line length 100
+- Python 3.11+, line length 100
 - Ruff with rules: E, F, I, N, W, UP, C901, S, B, PERF
 - Max cyclomatic complexity: 10
 - Security rules (S) relaxed in test files
+
+## Mutmut 3.x Quirks
+
+- `mutmut run` only accepts `--max-children` and `--paths-to-mutate` as CLI flags — no `--no-progress`, no `--runner`, etc.
+- In `pyproject.toml`, list-typed config values (`paths_to_mutate`, `tests_dir`) **must be TOML arrays**, not strings. A bare string like `"src/"` gets iterated character by character. Use `["src/"]` instead.
+- The `runner` config key does not exist in mutmut 3.x; it hardcodes `PytestRunner`.
+- mutmut creates a `mutants/` directory with trampoline-injected source. Verify source integrity with `git diff` after runs.
