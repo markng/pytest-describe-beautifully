@@ -52,6 +52,7 @@ exclude_lines = [
 [tool.mutmut]
 paths_to_mutate = ["src/pytest_describe_beautifully/"]
 tests_dir = ["tests/"]
+pytest_add_cli_args = ["--no-cov"]
 
 [tool.pytest.ini_options]
 python_files = ["describe_*.py"]
