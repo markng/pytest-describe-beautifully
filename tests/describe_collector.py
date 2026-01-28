@@ -269,10 +269,12 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_Calculator", "test_foo.py::describe_Calculator",
+            "describe_Calculator",
+            "test_foo.py::describe_Calculator",
         )
         test_func = _make_function_link(
-            "it_adds", "test_foo.py::describe_Calculator::it_adds",
+            "it_adds",
+            "test_foo.py::describe_Calculator::it_adds",
         )
         item = _make_item([session, module, describe, test_func])
 
@@ -305,13 +307,16 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         outer = _make_describe_link(
-            "describe_Outer", "test_foo.py::describe_Outer",
+            "describe_Outer",
+            "test_foo.py::describe_Outer",
         )
         inner = _make_describe_link(
-            "describe_inner_feature", "test_foo.py::describe_Outer::describe_inner_feature",
+            "describe_inner_feature",
+            "test_foo.py::describe_Outer::describe_inner_feature",
         )
         test_func = _make_function_link(
-            "it_works", "test_foo.py::describe_Outer::describe_inner_feature::it_works",
+            "it_works",
+            "test_foo.py::describe_Outer::describe_inner_feature::it_works",
         )
         item = _make_item([session, module, outer, inner, test_func])
 
@@ -331,13 +336,16 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_Calculator", "test_foo.py::describe_Calculator",
+            "describe_Calculator",
+            "test_foo.py::describe_Calculator",
         )
         test1 = _make_function_link(
-            "it_adds", "test_foo.py::describe_Calculator::it_adds",
+            "it_adds",
+            "test_foo.py::describe_Calculator::it_adds",
         )
         test2 = _make_function_link(
-            "it_subtracts", "test_foo.py::describe_Calculator::it_subtracts",
+            "it_subtracts",
+            "test_foo.py::describe_Calculator::it_subtracts",
         )
 
         item1 = _make_item([session, module, describe, test1])
@@ -380,14 +388,18 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_MyClass", "test_foo.py::describe_MyClass",
+            "describe_MyClass",
+            "test_foo.py::describe_MyClass",
         )
         test_func = _make_function_link(
             "it_uses_fixtures",
             "test_foo.py::describe_MyClass::it_uses_fixtures",
             fixture_names=[
-                "request", "capsys", "my_custom_fixture",
-                "monkeypatch", "db_connection",
+                "request",
+                "capsys",
+                "my_custom_fixture",
+                "monkeypatch",
+                "db_connection",
             ],
         )
         item = _make_item([session, module, describe, test_func])
@@ -430,13 +442,15 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_NoObj", "test_foo.py::describe_NoObj",
+            "describe_NoObj",
+            "test_foo.py::describe_NoObj",
         )
         # Remove both funcobj and obj to test the else branch
         del describe.funcobj
         del describe.obj
         test_func = _make_function_link(
-            "it_works", "test_foo.py::describe_NoObj::it_works",
+            "it_works",
+            "test_foo.py::describe_NoObj::it_works",
         )
         item = _make_item([session, module, describe, test_func])
 
@@ -452,7 +466,8 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_Foo", "test_foo.py::describe_Foo",
+            "describe_Foo",
+            "test_foo.py::describe_Foo",
         )
         # Create an unknown link type: no fspath, no collect, no function
         unknown_link = Mock()
@@ -462,7 +477,8 @@ def describe_build_from_items():
         del unknown_link.collect
         del unknown_link.function
         test_func = _make_function_link(
-            "it_works", "test_foo.py::describe_Foo::it_works",
+            "it_works",
+            "test_foo.py::describe_Foo::it_works",
         )
         item = _make_item([session, module, describe, unknown_link, test_func])
 
@@ -490,7 +506,8 @@ def describe_build_from_items():
         del weird_collector.function
 
         test_func = _make_function_link(
-            "it_works", "test_foo.py::it_works",
+            "it_works",
+            "test_foo.py::it_works",
         )
         item = _make_item([session, module, weird_collector, test_func])
 
@@ -509,10 +526,12 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_Foo", "test_foo.py::describe_Foo",
+            "describe_Foo",
+            "test_foo.py::describe_Foo",
         )
         test_func = _make_function_link(
-            "it_works", "test_foo.py::describe_Foo::it_works",
+            "it_works",
+            "test_foo.py::describe_Foo::it_works",
         )
         del test_func.fixturenames  # Remove fixturenames
         item = _make_item([session, module, describe, test_func])
@@ -530,10 +549,12 @@ def describe_build_from_items():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_Foo", "test_foo.py::describe_Foo",
+            "describe_Foo",
+            "test_foo.py::describe_Foo",
         )
         test_func = _make_function_link(
-            "it_works", "test_foo.py::describe_Foo::it_works",
+            "it_works",
+            "test_foo.py::describe_Foo::it_works",
             docstring="",  # No docstring
         )
         item = _make_item([session, module, describe, test_func])
@@ -554,10 +575,12 @@ def describe_build_from_items():
         session = _make_session_link()
         # Skip the module entirely; the describe block has no parent
         describe = _make_describe_link(
-            "describe_Orphan", "test_foo.py::describe_Orphan",
+            "describe_Orphan",
+            "test_foo.py::describe_Orphan",
         )
         test_func = _make_function_link(
-            "it_works", "test_foo.py::describe_Orphan::it_works",
+            "it_works",
+            "test_foo.py::describe_Orphan::it_works",
         )
         item = _make_item([session, describe, test_func])
 
@@ -586,10 +609,12 @@ def describe_update_from_report():
         session = _make_session_link()
         module = _make_module_link("test_foo.py", "test_foo.py")
         describe = _make_describe_link(
-            "describe_Foo", "test_foo.py::describe_Foo",
+            "describe_Foo",
+            "test_foo.py::describe_Foo",
         )
         test_func = _make_function_link(
-            "it_works", "test_foo.py::describe_Foo::it_works",
+            "it_works",
+            "test_foo.py::describe_Foo::it_works",
         )
         item = _make_item([session, module, describe, test_func])
 
@@ -911,11 +936,24 @@ def describe_update_from_report():
 def describe_builtin_fixtures():
     def it_contains_expected_fixtures():
         expected = {
-            "request", "pytestconfig", "tmp_path", "tmp_path_factory",
-            "capsys", "capfd", "capsysbinary", "capfdbinary", "caplog",
-            "monkeypatch", "recwarn", "doctest_namespace",
-            "cache", "record_property", "record_testsuite_property",
-            "record_xml_attribute", "pytester", "testdir",
+            "request",
+            "pytestconfig",
+            "tmp_path",
+            "tmp_path_factory",
+            "capsys",
+            "capfd",
+            "capsysbinary",
+            "capfdbinary",
+            "caplog",
+            "monkeypatch",
+            "recwarn",
+            "doctest_namespace",
+            "cache",
+            "record_property",
+            "record_testsuite_property",
+            "record_xml_attribute",
+            "pytester",
+            "testdir",
         }
         assert BUILTIN_FIXTURES == expected
 

@@ -233,9 +233,7 @@ class HtmlReporter:
     def _render_tree(self, tree: DescribeTree) -> str:
         """Render the full tree as HTML."""
         parts = [
-            self._render_node(child, is_root=True)
-            for root in tree.roots
-            for child in root.children
+            self._render_node(child, is_root=True) for root in tree.roots for child in root.children
         ]
         return "\n".join(parts)
 
@@ -256,10 +254,7 @@ class HtmlReporter:
 
         docstring_html = ""
         if node.docstring:
-            docstring_html = (
-                f' <span class="docstring">'
-                f"-- {html.escape(node.docstring)}</span>"
-            )
+            docstring_html = f' <span class="docstring">-- {html.escape(node.docstring)}</span>'
 
         return (
             f'<details class="{root_class.strip()}"{open_attr}>'
@@ -285,9 +280,7 @@ class HtmlReporter:
 
         docstring_html = ""
         if node.docstring:
-            docstring_html = (
-                f'<span class="docstring">-- {html.escape(node.docstring)}</span>'
-            )
+            docstring_html = f'<span class="docstring">-- {html.escape(node.docstring)}</span>'
 
         fixtures_html = ""
         if node.result.fixture_names:
@@ -307,10 +300,6 @@ class HtmlReporter:
 
         # Add failure block
         if outcome in (TestOutcome.FAILED, TestOutcome.ERROR) and node.result.longrepr:
-            test_html += (
-                f'<div class="failure-block">'
-                f"{html.escape(node.result.longrepr)}"
-                f"</div>\n"
-            )
+            test_html += f'<div class="failure-block">{html.escape(node.result.longrepr)}</div>\n'
 
         return test_html

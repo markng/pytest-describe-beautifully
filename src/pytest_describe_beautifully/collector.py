@@ -14,19 +14,35 @@ from pytest_describe_beautifully.model import (
 from pytest_describe_beautifully.naming import humanize_describe_name, humanize_test_name
 
 # Builtin fixtures that should be filtered out from display
-BUILTIN_FIXTURES = frozenset({
-    "request", "pytestconfig", "tmp_path", "tmp_path_factory",
-    "capsys", "capfd", "capsysbinary", "capfdbinary", "caplog",
-    "monkeypatch", "recwarn", "doctest_namespace",
-    "cache", "record_property", "record_testsuite_property",
-    "record_xml_attribute", "pytester", "testdir",
-})
+BUILTIN_FIXTURES = frozenset(
+    {
+        "request",
+        "pytestconfig",
+        "tmp_path",
+        "tmp_path_factory",
+        "capsys",
+        "capfd",
+        "capsysbinary",
+        "capfdbinary",
+        "caplog",
+        "monkeypatch",
+        "recwarn",
+        "doctest_namespace",
+        "cache",
+        "record_property",
+        "record_testsuite_property",
+        "record_xml_attribute",
+        "pytester",
+        "testdir",
+    }
+)
 
 
 def _is_describe_block(node) -> bool:
     """Check if a pytest node is a describe block."""
     try:
         from pytest_describe.plugin import DescribeBlock
+
         return isinstance(node, DescribeBlock)
     except ImportError:
         return type(node).__name__ == "DescribeBlock"
@@ -108,8 +124,7 @@ class TreeCollector:
             display_name = humanize_test_name(link.name)
             docstring = inspect.getdoc(link.function) or ""
             fixture_names = [
-                f for f in getattr(link, "fixturenames", [])
-                if f not in BUILTIN_FIXTURES
+                f for f in getattr(link, "fixturenames", []) if f not in BUILTIN_FIXTURES
             ]
         else:
             return None

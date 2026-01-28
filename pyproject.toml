@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "pytest-describe-beautifully"
 version = "0.1.0"
 description = "Beautiful terminal and HTML output for pytest-describe."
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "pytest>=7.0",
     "pytest-describe>=2.0",
@@ -24,7 +24,7 @@ dev = [
 describe_beautifully = "pytest_describe_beautifully.plugin"
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py311"
 line-length = 100
 
 [tool.ruff.lint]

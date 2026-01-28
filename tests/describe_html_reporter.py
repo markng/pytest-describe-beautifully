@@ -1,6 +1,5 @@
 """Tests for the HTML reporter."""
 
-
 from pytest_describe_beautifully.html_reporter import OUTCOME_SYMBOLS, HtmlReporter
 from pytest_describe_beautifully.model import (
     DescribeNode,
@@ -46,26 +45,38 @@ def describe_HtmlReporter():
         def it_renders_all_outcome_types(tmp_path):
             # Create a tree with every outcome type
             outcomes = [
-                TestOutcome.PASSED, TestOutcome.FAILED, TestOutcome.SKIPPED,
-                TestOutcome.XFAILED, TestOutcome.XPASSED, TestOutcome.ERROR,
+                TestOutcome.PASSED,
+                TestOutcome.FAILED,
+                TestOutcome.SKIPPED,
+                TestOutcome.XFAILED,
+                TestOutcome.XPASSED,
+                TestOutcome.ERROR,
             ]
             children = []
             for i, outcome in enumerate(outcomes):
                 is_err = outcome in (TestOutcome.FAILED, TestOutcome.ERROR)
                 longrepr = "error text" if is_err else ""
-                children.append(DescribeNode(
-                    name=f"it_test_{i}", display_name=f"it test {i}",
-                    node_type=NodeType.TEST, nodeid=f"t{i}",
-                    result=TestResult(outcome=outcome, duration=0.01, longrepr=longrepr),
-                ))
+                children.append(
+                    DescribeNode(
+                        name=f"it_test_{i}",
+                        display_name=f"it test {i}",
+                        node_type=NodeType.TEST,
+                        nodeid=f"t{i}",
+                        result=TestResult(outcome=outcome, duration=0.01, longrepr=longrepr),
+                    )
+                )
             describe = DescribeNode(
-                name="describe_All", display_name="All",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                name="describe_All",
+                display_name="All",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=children,
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])
@@ -88,18 +99,24 @@ def describe_HtmlReporter():
 
         def it_collapses_passing_blocks(tmp_path):
             child = DescribeNode(
-                name="it_works", display_name="it works",
-                node_type=NodeType.TEST, nodeid="t",
+                name="it_works",
+                display_name="it works",
+                node_type=NodeType.TEST,
+                nodeid="t",
                 result=TestResult(outcome=TestOutcome.PASSED, duration=0.001),
             )
             describe = DescribeNode(
-                name="describe_Good", display_name="Good",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                name="describe_Good",
+                display_name="Good",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=[child],
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])
@@ -112,20 +129,26 @@ def describe_HtmlReporter():
 
         def it_shows_docstrings(tmp_path):
             child = DescribeNode(
-                name="it_works", display_name="it works",
-                node_type=NodeType.TEST, nodeid="t",
+                name="it_works",
+                display_name="it works",
+                node_type=NodeType.TEST,
+                nodeid="t",
                 docstring="Test that it works.",
                 result=TestResult(outcome=TestOutcome.PASSED, duration=0.001),
             )
             describe = DescribeNode(
-                name="describe_Foo", display_name="Foo",
+                name="describe_Foo",
+                display_name="Foo",
                 docstring="Foo operations.",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=[child],
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])
@@ -138,21 +161,28 @@ def describe_HtmlReporter():
 
         def it_shows_fixtures(tmp_path):
             child = DescribeNode(
-                name="it_works", display_name="it works",
-                node_type=NodeType.TEST, nodeid="t",
+                name="it_works",
+                display_name="it works",
+                node_type=NodeType.TEST,
+                nodeid="t",
                 result=TestResult(
-                    outcome=TestOutcome.PASSED, duration=0.001,
+                    outcome=TestOutcome.PASSED,
+                    duration=0.001,
                     fixture_names=["my_fixture", "other_fixture"],
                 ),
             )
             describe = DescribeNode(
-                name="describe_Foo", display_name="Foo",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                name="describe_Foo",
+                display_name="Foo",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=[child],
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])
@@ -166,18 +196,24 @@ def describe_HtmlReporter():
 
         def it_marks_slow_tests(tmp_path):
             child = DescribeNode(
-                name="it_is_slow", display_name="it is slow",
-                node_type=NodeType.TEST, nodeid="t",
+                name="it_is_slow",
+                display_name="it is slow",
+                node_type=NodeType.TEST,
+                nodeid="t",
                 result=TestResult(outcome=TestOutcome.PASSED, duration=1.5),
             )
             describe = DescribeNode(
-                name="describe_Foo", display_name="Foo",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                name="describe_Foo",
+                display_name="Foo",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=[child],
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])
@@ -190,21 +226,28 @@ def describe_HtmlReporter():
 
         def it_shows_failure_blocks(tmp_path):
             child = DescribeNode(
-                name="it_fails", display_name="it fails",
-                node_type=NodeType.TEST, nodeid="t",
+                name="it_fails",
+                display_name="it fails",
+                node_type=NodeType.TEST,
+                nodeid="t",
                 result=TestResult(
-                    outcome=TestOutcome.FAILED, duration=0.01,
+                    outcome=TestOutcome.FAILED,
+                    duration=0.01,
                     longrepr="AssertionError: expected True",
                 ),
             )
             describe = DescribeNode(
-                name="describe_Foo", display_name="Foo",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                name="describe_Foo",
+                display_name="Foo",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=[child],
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])
@@ -217,17 +260,23 @@ def describe_HtmlReporter():
 
         def it_renders_test_without_result(tmp_path):
             child = DescribeNode(
-                name="it_pending", display_name="it pending",
-                node_type=NodeType.TEST, nodeid="t",
+                name="it_pending",
+                display_name="it pending",
+                node_type=NodeType.TEST,
+                nodeid="t",
             )
             describe = DescribeNode(
-                name="describe_Foo", display_name="Foo",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                name="describe_Foo",
+                display_name="Foo",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=[child],
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])
@@ -242,18 +291,22 @@ def describe_HtmlReporter():
             child = DescribeNode(
                 name="it_handles_angle_brackets",
                 display_name="it handles <angle> brackets",
-                node_type=NodeType.TEST, nodeid="t",
+                node_type=NodeType.TEST,
+                nodeid="t",
                 result=TestResult(outcome=TestOutcome.PASSED, duration=0.001),
             )
             describe = DescribeNode(
                 name="describe_HtmlEscape",
                 display_name="<HtmlEscape>",
-                node_type=NodeType.DESCRIBE, nodeid="d",
+                node_type=NodeType.DESCRIBE,
+                nodeid="d",
                 children=[child],
             )
             file_node = DescribeNode(
-                name="test.py", display_name="test.py",
-                node_type=NodeType.FILE, nodeid="test.py",
+                name="test.py",
+                display_name="test.py",
+                node_type=NodeType.FILE,
+                nodeid="test.py",
                 children=[describe],
             )
             tree = DescribeTree(roots=[file_node])

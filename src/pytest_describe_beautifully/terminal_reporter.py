@@ -116,10 +116,7 @@ class BeautifulTerminalReporter:
         self.tw.line("".join(line_parts), **markup)
 
         # Print failure details inline
-        if (
-            node.result.outcome in (TestOutcome.FAILED, TestOutcome.ERROR)
-            and node.result.longrepr
-        ):
+        if node.result.outcome in (TestOutcome.FAILED, TestOutcome.ERROR) and node.result.longrepr:
             for longrepr_line in node.result.longrepr.splitlines():
                 self.tw.line(f"{indent}    {longrepr_line}", red=True)
 
@@ -135,17 +132,13 @@ class BeautifulTerminalReporter:
             for child in root.children:
                 self._print_summary_node(child, prefix="", is_last=True)
 
-    def _print_summary_node(
-        self, node: DescribeNode, prefix: str, is_last: bool
-    ) -> None:
+    def _print_summary_node(self, node: DescribeNode, prefix: str, is_last: bool) -> None:
         """Recursively print summary tree nodes."""
         connector = "\u2514\u2500\u2500 " if is_last else "\u251c\u2500\u2500 "
         symbol, color = OUTCOME_SYMBOLS.get(node.overall_outcome, ("?", "white"))
 
         if node.is_test:
-            duration_str = (
-                format_duration(node.result.duration) if node.result else "0ms"
-            )
+            duration_str = format_duration(node.result.duration) if node.result else "0ms"
             line = f"{prefix}{connector}{symbol} {node.display_name} ({duration_str})"
         else:
             passed = node.passed_count

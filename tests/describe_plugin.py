@@ -79,18 +79,14 @@ def describe_pytest_addoption():
 
         pytest_addoption(parser)
 
-        parser.getgroup.assert_called_once_with(
-            "describe-beautifully", "Beautiful describe output"
-        )
+        parser.getgroup.assert_called_once_with("describe-beautifully", "Beautiful describe output")
         # Should register 5 options
         assert group.addoption.call_count == 5
 
         # Extract all option names
         option_names = []
         for call in group.addoption.call_args_list:
-            option_names.extend(
-                arg for arg in call[0] if arg.startswith("--")
-            )
+            option_names.extend(arg for arg in call[0] if arg.startswith("--"))
         assert "--describe-beautifully" in option_names
         assert "--db" in option_names
         assert "--describe-slow" in option_names
@@ -144,9 +140,7 @@ def describe_pytest_unconfigure():
         reporter = Mock()
         config.pluginmanager.get_plugin.return_value = reporter
         pytest_unconfigure(config)
-        config.pluginmanager.get_plugin.assert_called_once_with(
-            "describe-beautifully-reporter"
-        )
+        config.pluginmanager.get_plugin.assert_called_once_with("describe-beautifully-reporter")
         config.pluginmanager.unregister.assert_called_once_with(reporter)
 
     def it_does_nothing_if_no_reporter():
@@ -250,11 +244,11 @@ def describe_pytester_plugin_integration():
             """
         )
         pytester.makepyfile(
-            test_simple='''
+            test_simple="""
             def describe_Simple():
                 def it_works():
                     assert True
-            '''
+            """
         )
         result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
         result.stdout.fnmatch_lines(["*Simple*", "*\u2713 it works*"])
@@ -269,11 +263,11 @@ def describe_pytester_plugin_integration():
             """
         )
         pytester.makepyfile(
-            test_db='''
+            test_db="""
             def describe_DbAlias():
                 def it_works():
                     assert True
-            '''
+            """
         )
         result = pytester.runpytest("--db", "-p", "no:cov")
         result.stdout.fnmatch_lines(["*DbAlias*", "*\u2713 it works*"])
@@ -288,11 +282,11 @@ def describe_pytester_plugin_integration():
             """
         )
         pytester.makepyfile(
-            test_noactivate='''
+            test_noactivate="""
             def describe_NoActivate():
                 def it_works():
                     assert True
-            '''
+            """
         )
         result = pytester.runpytest("-p", "no:cov")
         # Without the flag, the beautiful reporter should not be active
@@ -309,11 +303,11 @@ def describe_pytester_plugin_integration():
             """
         )
         pytester.makepyfile(
-            test_html='''
+            test_html="""
             def describe_HtmlTest():
                 def it_generates_report():
                     assert True
-            '''
+            """
         )
         html_path = str(pytester.path / "report.html")
         result = pytester.runpytest(
@@ -339,11 +333,11 @@ def describe_pytester_plugin_integration():
             """
         )
         pytester.makepyfile(
-            test_opts='''
+            test_opts="""
             def describe_Opts():
                 def it_works():
                     assert True
-            '''
+            """
         )
         result = pytester.runpytest(
             "--describe-beautifully",

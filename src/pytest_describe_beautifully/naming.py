@@ -13,7 +13,7 @@ def humanize_describe_name(name: str) -> str:
     stripped = name
     for prefix in ("describe_", "Describe_"):
         if stripped.startswith(prefix):
-            stripped = stripped[len(prefix):]
+            stripped = stripped[len(prefix) :]
             break
 
     if not stripped:

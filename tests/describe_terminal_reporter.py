@@ -326,9 +326,7 @@ def describe_print_headers_for():
     def it_prints_new_block_headers():
         reporter, tw = _setup_reporter_with_nested_tree()
 
-        reporter._print_headers_for(
-            "test.py::describe_Outer::describe_inner::it_works"
-        )
+        reporter._print_headers_for("test.py::describe_Outer::describe_inner::it_works")
 
         # Should print Outer and inner headers
         calls = tw.line.call_args_list
@@ -339,16 +337,12 @@ def describe_print_headers_for():
         reporter, tw = _setup_reporter_with_nested_tree()
 
         # First call prints headers
-        reporter._print_headers_for(
-            "test.py::describe_Outer::describe_inner::it_works"
-        )
+        reporter._print_headers_for("test.py::describe_Outer::describe_inner::it_works")
         assert tw.line.call_count > 0  # headers were printed
 
         # Second call for same block should not print again
         tw.reset_mock()
-        reporter._print_headers_for(
-            "test.py::describe_Outer::describe_inner::it_works"
-        )
+        reporter._print_headers_for("test.py::describe_Outer::describe_inner::it_works")
         assert tw.line.call_count == 0
 
     def it_prints_headers_with_docstrings_in_expand_mode():
@@ -419,9 +413,7 @@ def describe_print_headers_for():
     def it_updates_current_stack():
         reporter, tw = _setup_reporter_with_nested_tree()
 
-        reporter._print_headers_for(
-            "test.py::describe_Outer::describe_inner::it_works"
-        )
+        reporter._print_headers_for("test.py::describe_Outer::describe_inner::it_works")
 
         assert reporter._current_stack == [
             "test.py::describe_Outer",
@@ -444,9 +436,7 @@ def describe_print_headers_for():
         reporter.collector.tree = DescribeTree(roots=[file_node])
 
         # Pass a nodeid with a describe block that isn't in the tree
-        reporter._print_headers_for(
-            "test.py::describe_Missing::it_works"
-        )
+        reporter._print_headers_for("test.py::describe_Missing::it_works")
 
         # Should not print any header (block_node is None)
         tw.line.assert_not_called()
@@ -489,9 +479,7 @@ def describe_print_headers_for():
 
         tree.find_by_nodeid = patched_find
 
-        reporter._print_headers_for(
-            "test.py::describe_Foo::it_works"
-        )
+        reporter._print_headers_for("test.py::describe_Foo::it_works")
 
         # No header should be printed since block_node was None
         tw.line.assert_not_called()
@@ -1228,14 +1216,14 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_example='''
+                test_example="""
                 def describe_Calculator():
                     def it_adds_numbers():
                         assert 1 + 1 == 2
 
                     def it_subtracts_numbers():
                         assert 3 - 1 == 2
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(
@@ -1256,12 +1244,12 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_nested='''
+                test_nested="""
                 def describe_Math():
                     def describe_add():
                         def it_adds_positives():
                             assert 1 + 1 == 2
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(
@@ -1283,11 +1271,11 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_pass='''
+                test_pass="""
                 def describe_Tests():
                     def it_passes():
                         assert True
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(["*\u2713 it passes*"])
@@ -1302,11 +1290,11 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_fail='''
+                test_fail="""
                 def describe_Tests():
                     def it_fails():
                         assert False, "expected failure"
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(
@@ -1326,12 +1314,12 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_skip='''
+                test_skip="""
                 import pytest
                 def describe_Tests():
                     def it_is_skipped():
                         pytest.skip("reason")
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(["*\u25cb it is skipped*"])
@@ -1346,13 +1334,13 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_xfail='''
+                test_xfail="""
                 import pytest
                 def describe_Tests():
                     @pytest.mark.xfail
                     def it_is_expected_to_fail():
                         assert False
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(["*\u2298 it is expected to fail*"])
@@ -1367,13 +1355,13 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_xpass='''
+                test_xpass="""
                 import pytest
                 def describe_Tests():
                     @pytest.mark.xfail
                     def it_unexpectedly_passes():
                         assert True
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(["*\u2717! it unexpectedly passes*"])
@@ -1388,7 +1376,7 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_error='''
+                test_error="""
                 import pytest
 
                 @pytest.fixture
@@ -1398,7 +1386,7 @@ def describe_pytester_integration():
                 def describe_Tests():
                     def it_has_error(broken_fixture):
                         pass
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(["*\u2620 it has error*"])
@@ -1414,13 +1402,13 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_slow='''
+                test_slow="""
                 import time
                 def describe_Tests():
                     def it_is_slow():
                         time.sleep(0.6)
                         assert True
-                '''
+                """
             )
             result = pytester.runpytest(
                 "--describe-beautifully", "--describe-slow=0.1", "-p", "no:cov"
@@ -1469,7 +1457,7 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_fixtures='''
+                test_fixtures="""
                 import pytest
 
                 @pytest.fixture
@@ -1479,7 +1467,7 @@ def describe_pytester_integration():
                 def describe_Calculator():
                     def it_uses_fixture(calculator):
                         assert calculator is not None
-                '''
+                """
             )
             result = pytester.runpytest(
                 "--describe-beautifully",
@@ -1499,7 +1487,7 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_no_fix='''
+                test_no_fix="""
                 import pytest
 
                 @pytest.fixture
@@ -1509,7 +1497,7 @@ def describe_pytester_integration():
                 def describe_Calculator():
                     def it_uses_fixture(calculator):
                         assert calculator is not None
-                '''
+                """
             )
             result = pytester.runpytest(
                 "--describe-beautifully",
@@ -1531,7 +1519,7 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_summary='''
+                test_summary="""
                 def describe_Math():
                     def describe_add():
                         def it_adds():
@@ -1539,7 +1527,7 @@ def describe_pytester_integration():
 
                         def it_adds_negatives():
                             assert True
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(
@@ -1560,11 +1548,11 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_summary2='''
+                test_summary2="""
                 def describe_Tests():
                     def it_passes():
                         assert True
-                '''
+                """
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(
@@ -1585,16 +1573,16 @@ def describe_pytester_integration():
                 """
             )
             pytester.makepyfile(
-                test_one='''
+                test_one="""
                 def describe_One():
                     def it_works():
                         assert True
-                ''',
-                test_two='''
+                """,
+                test_two="""
                 def describe_Two():
                     def it_works():
                         assert True
-                ''',
+                """,
             )
             result = pytester.runpytest("--describe-beautifully", "-p", "no:cov")
             result.stdout.fnmatch_lines(
