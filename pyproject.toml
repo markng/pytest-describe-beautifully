@@ -6,6 +6,7 @@ build-backend = "hatchling.build"
 name = "pytest-describe-beautifully"
 version = "0.1.0"
 description = "Beautiful terminal and HTML output for pytest-describe."
+license = "MIT"
 requires-python = ">=3.11"
 dependencies = [
     "pytest>=7.0",
